@@ -1,0 +1,58 @@
+/*! 版权所有，翻版必究 */
+
+
+._2jk9KhX84DiSBIxRXJco5N{
+	width:100%;
+	height:100%;
+	background-color: #DFF0F9;
+	position: relative;
+	left:0;
+	right:0;
+	margin:auto;
+}
+
+
+
+/*初始化  reset*/  
+body,button,dd,dl,dt,h1,h2,h3,h4,h5,h6,input,li,ol,p,td,ul{margin:0;padding:0}  
+body,button,input{font:12px/1.5 tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif}  
+button,input{font-size:100%}  
+ol,ul{list-style:none}  
+a{text-decoration:none}  
+a:hover{text-decoration:underline}  
+fieldset,img{border:0;vertical-align:top;}  
+a,button{cursor:pointer;}  
+/*清除浮动*/  
+.y0FtALfJ4aNgZzCEPo0Ta:before,.y0FtALfJ4aNgZzCEPo0Ta:after {  
+	content:"";  
+	display:table;  
+}  
+.y0FtALfJ4aNgZzCEPo0Ta:after{clear:both;}  
+.y0FtALfJ4aNgZzCEPo0Ta{  
+	*zoom:1;/*IE/7/6*/  
+}  
+/*normalize.css，以上样式为*/
+
+
+
+html {
+  box-sizing: border-box;
+  -ms-text-size-adjust: 100%;
+font-size: 20px;
+  -webkit-text-size-adjust: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul {
+  margin: 0;
+  padding: 0;
+}
+

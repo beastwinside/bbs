@@ -32,14 +32,14 @@ class Mainpage extends Component{
 			<div style={{width:'100%',height:'10%',backgroundColor:"#509BB2",textAlign:'center',fontSize:'26px',color:'#FFFFFF'}}>  登录界面</div>
 			<form  action="http://172.20.10.10:8089" method="get" style={{width:'100%',height:'100%'}}>
 			<h1 style={{textAlign:'center',marginTop:'10%'}}>银亿集团企业微信BBS系统</h1>
-			<Link to='/Fatie'>
+			<Link to='/fatie'>
 			<Button type="primary"    style={{width:'80%',height:'40PX',marginLeft:'10%',marginTop:'20%'}}>登录</Button>
 			</Link>
-			<Link to='/Menu'>
+			<Link to='/menu'>
 			<Button type="primary"    style={{width:'80%',height:'40PX',marginLeft:'10%',marginTop:'8%'}}>菜单</Button>
 			</Link>
-			<Link to='/Fatie'>
-			<Button type="primary"    style={{width:'80%',height:'40PX',marginLeft:'10%',marginTop:'8%'}}>登录</Button>
+			<Link to='/mypage'>
+			<Button type="primary"    style={{width:'80%',height:'40PX',marginLeft:'10%',marginTop:'8%'}}>我的首页</Button>
 			</Link>
 
 			</form>
