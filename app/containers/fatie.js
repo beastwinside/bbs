@@ -10,6 +10,22 @@ const { TextArea } = Input;
 class Fatie extends Component{
 
 
+	constructor(props){
+		super(props);
+	}
+
+	
+
+	componentDidMount(){
+		var searchstr=( this.props.location.search);
+		var str1=searchstr.split('&');
+		var str2=str1[0].split('=');
+		alert(str2[1]);
+
+
+	}
+
+
 	render(){
 		return(
 			<div >
