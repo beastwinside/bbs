@@ -7,10 +7,49 @@ import{Router,HashRouter,Match,Route,Link,hashHistory,IndexLink} from 'react-rou
 
 
 class Detailpart extends Component{
-	
+  constructor(props){
+    super(props);
+    this.state={
+      userid:"7777777",
+      data:[],
+      part:'',
+      name:"",
+      avatar:""
+    };
+
+    this.entermenu=this.entermenu.bind(this);
+      this.entermypage=this.entermypage.bind(this);
+
+  }
+
+    entermypage(){
+    this.props.history.push({pathname:'./mypage',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
+  }
+
+  entermenu(){
+    this.props.history.push({pathname:'./menu',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
 
 
-	render(){
+  }
+
+  componentDidMount()
+  {
+
+    alert(this.props.location.state.userid);
+    alert(this.props.location.state.part);
+    this.setState({
+      userid:this.props.location.state.userid,
+      part:this.props.location.state.part,
+      name:this.props.location.state.name,
+      avatar:this.props.location.state.avatar
+
+    });
+    alert('当前进入模块'+this.props.location.state.part+'当前登陆者id'+this.props.location.state.userid);
+
+  }
+
+
+  render(){
     const data = [
     {title: '今天胖了啊啊啊啊啊啊啊啊啊啊啊啊啊啊。。',
     name:'肖文府1',time:'2017/8/1'
@@ -42,20 +81,25 @@ name:'肖文府',
 
 return(
  <div >
- <div style={{backgroundColor:'#127D51',width:'80px',height:'40px',position:'fixed',top:'20%',zIndex:'3',right:'0',textIndent:'10px',borderRadius:'20px 0 0 20px'}}>
-      <Link to="./menu">
-      <Icon type="home" style={{ fontSize: 35, color: '#FFFFFF'}}  />
-      </Link>
-      </div>
+
+ {this.state.userid} 
+ {this.state.part}
+ <div onClick={this.entermenu}
+ style={{backgroundColor:'#127D51',width:'80px',height:'40px',position:'fixed',top:'20%',zIndex:'3',right:'0',textIndent:'10px',borderRadius:'20px 0 0 20px'}}>
+
+ <Icon type="home" style={{ fontSize: 35, color: '#FFFFFF'}}  />
+
+ </div>
  <div style={{backgroundColor:'#127D51',width:'40px',height:'40px',position:'fixed',bottom:'20px',
-      left:'0',right:'0',margin:'auto',zIndex:'3',right:'0',borderRadius:'20px',textAlign:'center'}}>
-      <Link to="./fatie">
-      <Icon type="plus" style={{ fontSize: 38, color: '#FFFFFF'}}  />
-      </Link>
-      </div>
+ left:'0',right:'0',margin:'auto',zIndex:'3',right:'0',borderRadius:'20px',textAlign:'center'}}>
+ <Link to="./fatie">
+ <Icon type="plus" style={{ fontSize: 38, color: '#FFFFFF'}}  />
+ </Link>
+ </div>
  <List
  size="large"
- header={<div style={{width:'100%',height:'10%',backgroundColor:"#224B1B",textAlign:'center',fontSize:'26px',color:'#FFFFFF'}}> <Icon type="star-o" style={{ fontSize: 26, color: '#08c'}} /> 娱乐版块</div>}
+ header={<div style={{width:'100%',height:'10%',backgroundColor:"#224B1B",textAlign:'center',fontSize:'26px',color:'#FFFFFF'}}> <Icon type="star-o" style={{ fontSize: 26, color: '#08c'}} /> 
+ 当前登陆者id：{this.state.userid} {this.state.part}版块</div>}
  footer={<div style={{width:'100%',height:'10%',backgroundColor:"#224B1B",textAlign:'center',fontSize:'26px',color:'#FFFFFF'}}> 底部</div>}
  bordered
  dataSource={data}

@@ -12,17 +12,58 @@ class Fatie extends Component{
 
 	constructor(props){
 		super(props);
+		this.state={
+			userid:"666",
+			selectvalue:"",
+			content:"",
+			name:"",
+			avatar:""
+		};
+
+		this.selecthandlechange=this.selecthandlechange.bind(this);
+		this.submit=this.submit.bind(this);
+		this.update=this.update.bind(this);
+		this.entermenu=this.entermenu.bind(this);
+
+
 	}
 
-	
+
+	entermenu(){
+		alert(this.state.userid);
+		this.props.history.push({pathname:'./menu',state:{userid:this.state.userid}});
+
+	}
+	update(e){
+
+		alert(e.target.value);
+		this.setState({
+			content:e.target.value
+		});
+
+	}
+
+	selecthandlechange(e){
+
+		this.setState({
+			selectvalue:e
+		});
+		alert(e);
+
+	}
+
+	submit(){
+		alert(JSON.stringify(this.state));
+	}
+
+
 
 	componentDidMount(){
-		var searchstr=( this.props.location.search);
-		var str1=searchstr.split('&');
-		var str2=str1[0].split('=');
-		alert(str2[1]);
-
-
+		alert(this.props.location.state.userid);
+		this.setState({
+			userid:this.props.location.state.userid
+		});
+		
 	}
 
 
@@ -33,7 +74,7 @@ class Fatie extends Component{
 			<h1 style={{textAlign:'center'}}>    发布新帖子</h1>
 			<p><Icon type="appstore" style={{ fontSize: 26, color: '#08c'}} />
 			<span style={{color:'black'}}>    发布专栏:</span> 
-			<Select defaultValue="生活" style={{ width: 120 }}>
+			<Select defaultValue="生活" style={{ width: 120 }} onChange={this.selecthandlechange}>
 			<Option value="工作">工作</Option>
 			<Option value="情感">情感</Option>
 			<Option value="银亿" disabled>银亿</Option>
@@ -43,20 +84,20 @@ class Fatie extends Component{
 			<Option value="交友">交友</Option>
 			<Option value="健康">健康</Option>
 			</Select></p>
-			<p><Icon type="user-add" style={{ fontSize: 23, color: '#08c'}} />发帖人: <Input defaultValue='肖文府' disabled='ture'/></p>
+			<p><Icon type="user-add" style={{ fontSize: 23, color: '#08c'}} />发帖人: <Input defaultValue={this.props.location.state.userid} disabled='ture'/></p>
 			<p><Icon type="calendar" style={{ fontSize: 23, color: '#08c'}} /> 发帖日期: <Input defaultValue='2018/8/3' disabled='ture'/></p>
 			<p><Icon type="message" style={{ fontSize: 23, color: '#08c'}} />输入正文:</p>
-			<TextArea rows={6} />
-			<Button type="primary"   onClick={this.login} style={{marginLeft:'7%',marginTop:'5%',width:'43%'}}>
+			<TextArea rows={6}  onBlur={this.update}/>
+			<Button type="primary"   onClick={this.submit} style={{marginLeft:'7%',marginTop:'5%',width:'43%'}}>
 			<Icon type="check" style={{ fontSize: 26, color: '#FFFFFF'}} /></Button>
 			<Link to='/menu'>
 			<Button  style={{positionLeft:'absolute',marginLeft:'5%',width:'43%'}}>
 			<Icon type="home" style={{ fontSize: 26, color: '#08c'}} /></Button>
 			</Link>
-			<Link to="./menu">
-			<Button type="primary"   onClick={this.login} style={{marginLeft:'7%',marginTop:'5%',width:'43%'}}>
+			
+			<Button type="primary"   onClick={this.entermenu} style={{marginLeft:'7%',marginTop:'5%',width:'43%'}}>
 			<Icon type="appstore" style={{ fontSize: 26, color: '#FFFFFF'}} /></Button>
-			</Link>
+			
 			<Link to='/Mypage'>
 			<Button  style={{positionLeft:'absolute',marginLeft:'5%',width:'43%'}}>
 			<Icon type="user" style={{ fontSize: 26, color: '#08c'}} /></Button>

@@ -10,68 +10,98 @@ import {var1} from './lib.js'
 
 class Menu extends Component{
 
+	constructor(props){
+		super(props);
+		this.state={
+			userid:"7777777",
+			data:[],
+			name:"",
+			avatar:""
+		};
+		this.start=this.start.bind(this);
+		this.handleclick=this.handleclick.bind(this);
+		this.enterfatie=this.enterfatie.bind(this);
+		this.entermypage=this.entermypage.bind(this);
+	}
 
+	entermypage(){
+		this.props.history.push({pathname:'./mypage',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
+	}
+
+	enterfatie(){
+		this.props.history.push({pathname:'./fatie',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
+	}
+
+	handleclick(e){
+		const indexx=e.target.getAttribute("data-dd");
+		this.props.history.push({pathname:'./detailpart',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name,part:indexx}});
+	}
+
+	start(){
+
+		let URL = 'http://cmc.chinayinyi.com:8018/yywms/Mo?cn=Menu&me=getmenu';
+		fetch(URL, {
+			method: 'get',
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8'
+			}
+
+		}).then(response => response.text())
+		.then(dataa => {
+			var jsonobj=JSON.parse(dataa).data;
+			var menuarr=[];
+			this.setState({
+				data:jsonobj,
+			});
+
+		});
+
+	}
+
+	componentDidMount()
+	{
+
+		this.start();
+		this.setState({      
+			userid:this.props.location.state.userid,
+			name:this.props.location.state.name,
+			avatar:this.props.location.state.avatar});
+
+	}
 
 
 	render(){
-		const data = [
-  {title: '娱乐',
-    num:'总共13篇帖子',
-    icon:'heart'
-  },{title: '工作',
-    num:'总共18篇帖子',
-    icon:'heart-o'
-},{title: '生活',
-    num:'总共17篇帖子',
-    icon:'eye'
-  },{title: '情感',
-    num:'总共16篇帖子',
-    icon:'eye-o'
-  }, {title: '时尚',
-    num:'总共10篇帖子',
-    icon:'camera'
-
-  },{title: '银亿',
-    num:'总共2篇帖子',
-    icon:'pay-circle'
-  },{title: '集团',
-    num:'总共8篇帖子',
-    icon:'bulb'
-  },{title: '交友',
-    num:'总共13篇帖子',
-    icon:'like'
-  },
-];
+		
 
 		return(
 			<div >
-			 <div style={{backgroundColor:'#127D51',width:'80px',height:'40px',position:'fixed',top:'20%',zIndex:'3',right:'0',textIndent:'10px',borderRadius:'20px 0 0 20px'}}>
-      <Link to="./Mypage">
-      <Icon type="user" style={{ fontSize: 35, color: '#FFFFFF'}}  />
-      </Link>
-      </div>
+			<div style={{backgroundColor:'#127D51',width:'80px',height:'40px',position:'fixed',top:'20%',zIndex:'3',right:'0',textIndent:'10px',borderRadius:'20px 0 0 20px'}}>
+			<Icon type="user" style={{ fontSize: 35, color: '#FFFFFF'}}  onClick={this.entermypage} />
+			</div>
 			<div style={{width:'100%',height:'10%',backgroundColor:"#509BB2",textAlign:'center',fontSize:'26px',color:'#FFFFFF'}}>  论坛模块</div>
 
 			<div style={{backgroundColor:'#127D51',width:'40px',height:'40px',position:'fixed',bottom:'20px',
 			left:'0',right:'0',margin:'auto',zIndex:'3',right:'0',borderRadius:'20px',textAlign:'center'}}>
-			<Link to="./fatie">
-			<Icon type="plus" style={{ fontSize: 38, color: '#FFFFFF'}}  />
-			</Link>
+
+			<Icon type="plus" style={{ fontSize: 38, color: '#FFFFFF'}} onClick={this.enterfatie} />
+
 			</div>
 			<List
-    grid={{ gutter: 16, column: 3}}
-    dataSource={data}
-    renderItem={item => (
-      <List.Item>
-      <Link to='/detailpart'>
-        <Card hoverable='true'
-	    title={<div><Icon type={item.icon} style={{ fontSize: 20, color: '#08c'}} />{item.title}</div>}  >
+			grid={{ gutter: 16, column: 3}}
+			dataSource={this.state.data}
+			renderItem={item => (
+				<List.Item>
 
-        {item.num}</Card>
-        </Link>
-      </List.Item>
-    )}
-  />
+				<Card hoverable='true' 
+				title={<div  onClick={this.handleclick} data-dd={item.BLOCKNAME} ><Icon type='heart-o' style={{ fontSize: 20, color: '#08c'}} />
+				{item.BLOCKNAME}	&nbsp;
+				共{item.POSTNUM}篇</div>}  >
+
+				</Card>
+
+				</List.Item>
+				)}
+			/>
 			</div>
 
 			);

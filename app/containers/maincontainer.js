@@ -14,6 +14,9 @@ import Detailpart from './detailpart.js'
 import Mypage from './mypage.js'
 import Contentdetail from './contentdetail.js'
 import Bell from './bell.js'
+import Login from './login.js'
+
+
 
 class Maincontainer  extends Component{
 	render(){
@@ -22,7 +25,7 @@ class Maincontainer  extends Component{
 			<div style={{position:'absolute',Left:'0',Right:'0',margin:'auto',width:'100%',height:'100%'}}>
 			<HashRouter history={hashHistory}>
 			<div>
-			<Route  exact path="/" component={Mypage} />
+			<Route  exact path="/" component={Login} />
 			<Route  path="/fatie" component={Fatie} />
 			<Route  path="/menu" component={Menu} />
 			<Route  path="/detailpart" component={Detailpart} />

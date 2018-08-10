@@ -58,14 +58,19 @@ class Contentdetail extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			account:'',
-			password:''
-
+			userid:"7777777",
+			name:"",
+			avatar:""
 		};
+		this.entermenu=this.entermenu.bind(this);
 
 	}
 
+	entermenu(){
+		this.props.history.push({pathname:'./menu',state:{userid:this.state.userid}});
 
+
+	}
 
 	componentDidMount(){
 
@@ -78,13 +83,13 @@ class Contentdetail extends Component{
 			<div >
 			
 			<div style={{backgroundColor:'#127D51',width:'80px',height:'40px',position:'fixed',top:'20%',zIndex:'3',right:'0',textIndent:'10px',borderRadius:'20px 0 0 20px'}}>
-			<Link to="./menu">
-			<Icon type="home" style={{ fontSize: 35, color: '#FFFFFF'}}  />
-			</Link>
+			
+			<Icon type="home" style={{ fontSize: 35, color: '#FFFFFF'}} onClick={this.entermenu} />
+			
 			</div>
-					<div style={{zIndex:'3',width:'100%',height:'7%',backgroundColor:"#509BB2",textAlign:'center',fontSize:'26px',color:'#FFFFFF',position:'fixed'}}> 
-			 帖子主题</div>
-				<div style={{width:'100%',height:'30px',backgroundColor:'#509BB2'}}></div>
+			<div style={{zIndex:'3',width:'100%',height:'7%',backgroundColor:"#509BB2",textAlign:'center',fontSize:'26px',color:'#FFFFFF',position:'fixed'}}> 
+			帖子主题</div>
+			<div style={{width:'100%',height:'30px',backgroundColor:'#509BB2'}}></div>
 			<List
 			itemLayout="horizontal"
 			dataSource={data}
