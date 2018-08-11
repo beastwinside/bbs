@@ -24,14 +24,19 @@ class Fatie extends Component{
 		this.submit=this.submit.bind(this);
 		this.update=this.update.bind(this);
 		this.entermenu=this.entermenu.bind(this);
+		this.entermypage=this.entermypage.bind(this);
 
 
+	}
+
+	entermypage(){
+		this.props.history.push({pathname:'./mypage',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
 	}
 
 
 	entermenu(){
 		alert(this.state.userid);
-		this.props.history.push({pathname:'./menu',state:{userid:this.state.userid}});
+		this.props.history.push({pathname:'./menu',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
 
 	}
 	update(e){
@@ -60,10 +65,12 @@ class Fatie extends Component{
 
 	componentDidMount(){
 		alert(this.props.location.state.userid);
-		this.setState({
-			userid:this.props.location.state.userid
-		});
-		
+		  this.setState({
+      userid:this.props.location.state.userid,
+      name:this.props.location.state.name,
+      avatar:this.props.location.state.avatar
+
+    });
 	}
 
 
@@ -97,11 +104,11 @@ class Fatie extends Component{
 			
 			<Button type="primary"   onClick={this.entermenu} style={{marginLeft:'7%',marginTop:'5%',width:'43%'}}>
 			<Icon type="appstore" style={{ fontSize: 26, color: '#FFFFFF'}} /></Button>
-			
-			<Link to='/Mypage'>
-			<Button  style={{positionLeft:'absolute',marginLeft:'5%',width:'43%'}}>
+
+		
+			<Button  style={{positionLeft:'absolute',marginLeft:'5%',width:'43%'}} onClick={this.entermypage}>
 			<Icon type="user" style={{ fontSize: 26, color: '#08c'}} /></Button>
-			</Link>
+		
 			</form>
 			</div>
 

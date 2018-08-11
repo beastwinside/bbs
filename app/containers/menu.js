@@ -34,7 +34,9 @@ class Menu extends Component{
 
 	handleclick(e){
 		const indexx=e.target.getAttribute("data-dd");
-		this.props.history.push({pathname:'./detailpart',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name,part:indexx}});
+		const blockid=e.target.getAttribute("data-id");
+		alert(blockid);
+		this.props.history.push({pathname:'./detailpart',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name,part:indexx,partid:blockid}});
 	}
 
 	start(){
@@ -49,7 +51,7 @@ class Menu extends Component{
 		}).then(response => response.text())
 		.then(dataa => {
 			var jsonobj=JSON.parse(dataa).data;
-			var menuarr=[];
+				
 			this.setState({
 				data:jsonobj,
 			});
@@ -93,7 +95,7 @@ class Menu extends Component{
 				<List.Item>
 
 				<Card hoverable='true' 
-				title={<div  onClick={this.handleclick} data-dd={item.BLOCKNAME} ><Icon type='heart-o' style={{ fontSize: 20, color: '#08c'}} />
+				title={<div  onClick={this.handleclick} data-dd={item.BLOCKNAME} data-id={item.BLOCKID} ><Icon type='heart-o' style={{ fontSize: 20, color: '#08c'}} />
 				{item.BLOCKNAME}	&nbsp;
 				共{item.POSTNUM}篇</div>}  >
 

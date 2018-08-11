@@ -56,6 +56,7 @@ class Mypage extends Component{
 
   }
 
+
   entermenu(){
     alert(this.state.userid);
     this.props.history.push({pathname:'./menu',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
