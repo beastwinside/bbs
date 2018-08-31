@@ -4,8 +4,10 @@ import {render} from 'react-dom'
 import fetch from 'isomorphic-fetch'
 import { Button ,Input,List, Card,Icon,Menu} from 'antd';
 import{Router,HashRouter,Match,Route,Link,hashHistory,IndexLink} from 'react-router-dom'
-import Background from './img/logo.png';
-
+import Background from './img/bg.jpg'
+import styles from '../styles/animate.css';
+var devheight=document.documentElement.clientHeight;
+var devwidth=document.documentElement.clientWidth;
 
 class Login extends Component{
 
@@ -26,7 +28,9 @@ class Login extends Component{
 
   getuser(code){
 
-    let URL = 'http://cmc.chinayinyi.com:8018/yywms/Mo?cn=Menu&me=getUser&code='+code;
+
+
+    let URL = 'http://cmc.chinayinyi.com:8018/yywms/Mo?cn=BBS&me=getUser&code='+code+'&time=';
     fetch(URL, {
       method: 'get',
       headers: {
@@ -35,7 +39,8 @@ class Login extends Component{
     }).then(response => response.text())
     .then(dataa => {
       var jsonobj=JSON.parse(dataa);
-  	  	 this.props.history.push({pathname:'./mypage',state:{userid:jsonobj.data[0].USERNAME,avatar:jsonobj.data[0].USERAVATAR,name:jsonobj.data[0].USERNAME}});
+     
+      this.props.history.push({pathname:'./mypage',state:{userid:jsonobj.data[0].USERNAME,id:jsonobj.data[0].ID,avatar:jsonobj.data[0].USERAVATAR,name:jsonobj.data[0].USERNAME}});
 
     });
 
@@ -43,7 +48,7 @@ class Login extends Component{
   }
 
   entermypage(){
-    this.props.history.push({pathname:'./mypage',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
+    this.props.history.push({pathname:'./mypost',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
   }
 
   savecode(){
@@ -54,17 +59,18 @@ class Login extends Component{
 
 
     if(this.state.code!==codestr)
-     {  
-   this.getuser(codestr);
- 
+    {  
+     this.getuser(codestr);
+
+   }
+
+   else ;
+
  }
 
- else ;
+ componentDidMount(){
 
-}
-
-componentDidMount(){
- this.savecode();
+  this.savecode();
 
 
 }
@@ -72,12 +78,13 @@ componentDidMount(){
 
 render(){
   return(
-   <div  >
-   login page
-    </div>
+   <div  style={{height:devheight,width:devwidth,overflow:'hidden'}} className={styles.animated+' '+styles.fadeOut}>
+   <img src={Background} alt="上海鲜花港 - 郁金香"  style={{width:'100%',height:'100%'}}/>
+
+   </div>
 
 
-    );
+   );
 }
 
 

@@ -13,7 +13,7 @@ import Menu from './menu.js'
 import Detailpart from './detailpart.js'
 import Mypage from './mypage.js'
 import Contentdetail from './contentdetail.js'
-import Bell from './bell.js'
+import Mypost from './mypost.js'
 import Login from './login.js'
 
 
@@ -31,7 +31,7 @@ class Maincontainer  extends Component{
 			<Route  path="/detailpart" component={Detailpart} />
 			<Route  path="/mypage" component={Mypage} />
 			<Route  path="/contentdetail" component={Contentdetail} />
-			<Route  path="/Bell" component={Bell} />
+			<Route  path="/Mypost" component={Mypost} />
 			</div>
 			</HashRouter>
 			</div>

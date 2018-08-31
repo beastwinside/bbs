@@ -4,8 +4,9 @@ import {render} from 'react-dom'
 import fetch from 'isomorphic-fetch'
 import { Button ,Input,List, Card,Icon} from 'antd';
 import{Router,HashRouter,Match,Route,Link,hashHistory,IndexLink} from 'react-router-dom'
-
+import styles from '../styles/animate.css';
 import {var1} from './lib.js'
+
 
 
 class Menu extends Component{
@@ -16,7 +17,10 @@ class Menu extends Component{
 			userid:"7777777",
 			data:[],
 			name:"",
-			avatar:""
+			avatar:"",
+			blockname:"",
+			id:""
+			
 		};
 		this.start=this.start.bind(this);
 		this.handleclick=this.handleclick.bind(this);
@@ -25,23 +29,24 @@ class Menu extends Component{
 	}
 
 	entermypage(){
-		this.props.history.push({pathname:'./mypage',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
+		this.props.history.push({pathname:'./mypost',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name,id:this.props.location.state.id}});
 	}
 
 	enterfatie(){
-		this.props.history.push({pathname:'./fatie',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
+		this.props.history.push({pathname:'./fatie',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name,id:this.props.location.state.id}});
 	}
 
 	handleclick(e){
-		const indexx=e.target.getAttribute("data-dd");
+		const blockname=e.target.getAttribute("data-dd");
 		const blockid=e.target.getAttribute("data-id");
-		alert(blockid);
-		this.props.history.push({pathname:'./detailpart',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name,part:indexx,partid:blockid}});
+
+
+		this.props.history.push({pathname:'./detailpart',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name,blockid:blockid,blockname:blockname,id:this.props.location.state.id}});
 	}
 
 	start(){
 
-		let URL = 'http://cmc.chinayinyi.com:8018/yywms/Mo?cn=Menu&me=getmenu';
+		let URL = 'http://cmc.chinayinyi.com:8018/yywms/Mo?cn=BBS&me=getmenu';
 		fetch(URL, {
 			method: 'get',
 			headers: {
@@ -51,7 +56,6 @@ class Menu extends Component{
 		}).then(response => response.text())
 		.then(dataa => {
 			var jsonobj=JSON.parse(dataa).data;
-				
 			this.setState({
 				data:jsonobj,
 			});
@@ -67,7 +71,10 @@ class Menu extends Component{
 		this.setState({      
 			userid:this.props.location.state.userid,
 			name:this.props.location.state.name,
-			avatar:this.props.location.state.avatar});
+			avatar:this.props.location.state.avatar,
+			blockid:this.props.location.state.blockid,
+			id:this.props.location.state.id});
+
 
 	}
 
@@ -75,37 +82,44 @@ class Menu extends Component{
 	render(){
 		
 
-		return(
-			<div >
-			<div style={{backgroundColor:'#127D51',width:'80px',height:'40px',position:'fixed',top:'20%',zIndex:'3',right:'0',textIndent:'10px',borderRadius:'20px 0 0 20px'}}>
-			<Icon type="user" style={{ fontSize: 35, color: '#FFFFFF'}}  onClick={this.entermypage} />
+		return(		
+			<div>
+
+			<div style={{backgroundColor:'#0088cc',width:'60px',height:'30px',position:'fixed',top:'5%',zIndex:'3',right:'0',textIndent:'10px',borderRadius:'20px 0 0 20px'}}>
+			<Icon type="user" style={{ fontSize: 27, color: '#FFFFFF'}}  onClick={this.entermypage} />
 			</div>
-			<div style={{width:'100%',height:'10%',backgroundColor:"#509BB2",textAlign:'center',fontSize:'26px',color:'#FFFFFF'}}>  论坛模块</div>
-
-			<div style={{backgroundColor:'#127D51',width:'40px',height:'40px',position:'fixed',bottom:'20px',
-			left:'0',right:'0',margin:'auto',zIndex:'3',right:'0',borderRadius:'20px',textAlign:'center'}}>
-
-			<Icon type="plus" style={{ fontSize: 38, color: '#FFFFFF'}} onClick={this.enterfatie} />
-
+			<div style={{backgroundColor:'#8EC1DA',width:'60px',height:'30px',position:'fixed',top:'12%',zIndex:'3',right:'0',textIndent:'10px',borderRadius:'20px 0 0 20px'}}>
+			<Icon type="appstore" style={{ fontSize: 27, color: '#FFFFFF'}}   />
 			</div>
+			<div style={{backgroundColor:'#0088cc',width:'60px',height:'30px',position:'fixed',top:'19%',zIndex:'3',right:'0',textIndent:'10px',borderRadius:'20px 0 0 20px'}}>
+			<Icon type="file-text" style={{ fontSize: 27, color: '#FFFFFF'}}  onClick={this.enterfatie} />
+			</div>
+			
+			
+			<div className={styles.animated+' '+styles.slideInUp} >
+			<div style={{width:'100%',height:'10%',textAlign:'center',fontSize:'26px',color:'#0088cc',marginTop:'20px',marginBottom:'20px'}}>  论坛模块</div>
 			<List
-			grid={{ gutter: 16, column: 3}}
+			grid={{ gutter: 16, column: 2}}
 			dataSource={this.state.data}
 			renderItem={item => (
-				<List.Item>
+				<List.Item  >
 
-				<Card hoverable='true' 
-				title={<div  onClick={this.handleclick} data-dd={item.BLOCKNAME} data-id={item.BLOCKID} ><Icon type='heart-o' style={{ fontSize: 20, color: '#08c'}} />
-				{item.BLOCKNAME}	&nbsp;
-				共{item.POSTNUM}篇</div>}  >
 
+				<Card hoverable='true'  
+				title={<div  onClick={this.handleclick} data-dd={item.BLOCKNAME} data-id={item.BLOCKID} >
+				<Icon type={item.ICON} style={{ fontSize: 25, color: '#08c'}} onClick={this.handleclick} data-dd={item.BLOCKNAME} data-id={item.BLOCKID}/>{item.BLOCKNAME}
+				</div>}  >
+				<div  >
+				<span  onClick={this.handleclick} data-dd={item.BLOCKNAME} data-id={item.BLOCKID}>{item.BLOCKNAME}	&nbsp;
+				共{item.COUNTS}篇帖子</span>
+				</div>
 				</Card>
 
 				</List.Item>
 				)}
 			/>
 			</div>
-
+			</div>
 			);
 	}
 
@@ -113,3 +127,41 @@ class Menu extends Component{
 }
 
 export default Menu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

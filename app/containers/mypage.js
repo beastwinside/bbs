@@ -2,18 +2,16 @@
 import React,{Component} from 'react'
 import {render} from 'react-dom'
 import fetch from 'isomorphic-fetch'
-import { Button ,Input,List, Card,Icon,Menu} from 'antd';
+import { Button ,Input,List, Card,Icon,Menu,Upload} from 'antd';
 import{Router,HashRouter,Match,Route,Link,hashHistory,IndexLink} from 'react-router-dom'
-import Background from './img/logo.png';
 
-const data = [
-'浏览历史',
-'我的帖子',
-'关注',
-'粉丝.',
-'关注的模块.',
-];
-const testpng="http://cmc.chinayinyi.com:8018/yywms/mobile/bbs/src/img/logo.png";
+import styles from '../styles/animate.css';
+import classnames from 'classnames'
+
+var devheight=document.documentElement.clientHeight;
+var devwidth=document.documentElement.clientWidth;
+
+
 
 class Mypage extends Component{
 
@@ -23,6 +21,8 @@ class Mypage extends Component{
       name:"",
       avatar:"",
       userid:"",
+      tt1:false,
+      tt2:false
 
     };
 
@@ -31,12 +31,21 @@ class Mypage extends Component{
     this.enterfatie=this.enterfatie.bind(this);
     this.savecode=this.savecode.bind(this);
     this.getuser=this.getuser.bind(this);
+    this.entermypost=this.entermypost.bind(this);
 
   }
 
+    entermypost(){
+      
+    this.props.history.push({pathname:'./mypost',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name,id:this.props.location.state.id}});
+
+  }
+
+
+
   getuser(code){
 
-    let URL = 'http://cmc.chinayinyi.com:8018/yywms/Mo?cn=Menu&me=getUser&code='+code;
+    let URL = 'http://cmc.chinayinyi.com:8018/yywms/Mo?cn=BBS&me=getUser&code='+code;
     fetch(URL, {
       method: 'get',
       headers: {
@@ -45,7 +54,7 @@ class Mypage extends Component{
     }).then(response => response.text())
     .then(dataa => {
       var jsonobj=JSON.parse(dataa);
-  
+
       this.setState({
         name:jsonobj.data[0].USERNAME,
         avatar:jsonobj.data[0].USERAVATAR,
@@ -58,13 +67,13 @@ class Mypage extends Component{
 
 
   entermenu(){
-    alert(this.state.userid);
+
     this.props.history.push({pathname:'./menu',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
 
   }
 
   enterfatie(){
-    alert(this.state.userid);
+
     this.props.history.push({pathname:'./fatie',state:{userid:this.state.userid,avatar:this.state.avatar,name:this.state.name}});
 
   }
@@ -88,7 +97,7 @@ class Mypage extends Component{
         userid:jsonobj.userid,
 
       });
-     
+
     });
 
   }
@@ -101,69 +110,76 @@ class Mypage extends Component{
 
 
     if(this.state.code!==codestr)
-     {  
-   this.getuser(codestr);
- 
+    {  
+     this.getuser(codestr);
+
+   }
+
+   else ;
+
  }
 
- else ;
+ componentDidMount(){
 
-}
+  this.setState({      
+    userid:this.props.location.state.userid,
+    name:this.props.location.state.name,
+    avatar:this.props.location.state.avatar});
 
-componentDidMount(){
 
-        this.setState({      
-      userid:this.props.location.state.userid,
-      name:this.props.location.state.name,
-      avatar:this.props.location.state.avatar});
+
 
 }
 
 
 render(){
   return(
-   <div  >
+   <div className={styles.animated+' '+styles.pulse}  >
 
-   <div style={{height:"100px",width:'100%',backgroundColor:'#ECE4EE'}}>
-   <img  style={{height:'80px',width:'80px',borderRadius:'40px',overflow:'hidden',margin:'5px'}} src={this.state.avatar}  />
-   <span style={{fontSize:'25px'}}> {this.state.name}</span>
-   <span  style={{paddingLeft:'70px'}}> 举头望明月，低头思故乡</span> 
-   <span  style={{paddingLeft:'70px',color:'#156685',fontWeight:'bold'}}> 点击编辑个人资料</span>
+
+   <div style={{height:"150px",width:devwidth,position:'relative'}}>
+   <img   style={{height:'80px',width:'80px',borderRadius:'40px',overflow:'hidden',position:'absolute',top:
+   '100px',right:'0px',left:'0px',margin:'auto',borderColor:'#0088cc',borderStyle:'solid',boxShadow:'0px 0px 2px #75A9C3'}} src={this.state.avatar}  />
+   </div>
+   
+
+ <div style={{top:"100px",height:"30px",width:devwidth,position:'relative'}}>
+   <h1 style={{textAlign:'center',color:"#585656"}}> 欢迎来到聊天吧~  </h1>
    </div>
 
-   <List
-   header={<div>
+   <div style={{marginTop:'200px'}}>
+   <div  style={{}}>
+   <Button     style={{marginLeft:'6%',width:'24%',height:'20px',borderColor:'white',fontSize:'12px'}}>
+   主题 </Button>
+   <Button    style={{positionLeft:'absolute',marginLeft:'6%',width:'24%',height:'20px',borderColor:'white',fontSize:'12px'}}>
+   发帖 </Button>
+   <Button  style={{positionLeft:'absolute',marginLeft:'6%',width:'24%',height:'20px',borderColor:'white',fontSize:'12px'}} >
+   我的</Button>
+   </div>
 
-    <Button type="primary"  onClick={this.entermenu}   style={{marginLeft:'2%',marginTop:'5%',width:'28%'}}>
-    <Icon type="appstore" style={{ fontSize: 26, color: '#FFFFFF'}} /></Button>
-
-
-    <Button  onClick={this.enterfatie}  style={{positionLeft:'absolute',marginLeft:'5%',width:'28%'}}>
-    <Icon type="plus" style={{ fontSize: 26, color: '#08c'}} /></Button>
-
-
-
-    <Button  style={{positionLeft:'absolute',marginLeft:'5%',width:'28%'}} onClick={this.savecode}>
-    <Icon type="bell" style={{ fontSize: 26, color: '#08c'}} /></Button>
-
-    </div>}
-    footer={<div >底部占位</div>}
-    bordered
-    dataSource={data}
-    renderItem={item => (<List.Item><Icon type="question-circle" style={{ fontSize: 20, color: '#310765'}}  /> &nbsp; &nbsp;{item}</List.Item>)}
-    />
-
-    <img  style={{height:'40px',width:'50px'}} src={testpng}  />
-    </div>
+   <Button  onClick={this.entermenu}   style={{marginLeft:'6%',marginTop:'1%',width:'24%',height:'30px'}}>
+   <Icon type="appstore" style={{ fontSize: 26, color: '#0088cc'}} /></Button>
+   <Button onClick={this.enterfatie}  style={{positionLeft:'absolute',marginLeft:'6%',width:'24%',height:'30px'}}>
+   <Icon type="file-text" style={{ fontSize: 26, color: '#0088cc'}} /></Button>
+   <Button style={{positionLeft:'absolute',marginLeft:'6%',width:'24%',height:'30px'}} onClick={this.entermypost}>
+   <Icon type="user" style={{ fontSize: 26, color: '#0088cc'}} /></Button>
+   </div>
 
 
-    );
+
+
+   </div>
+
+
+   );
 }
 
 
 }
 
 export default Mypage
+
+
 
 
 
