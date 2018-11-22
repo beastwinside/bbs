@@ -30,7 +30,7 @@ class Login extends Component{
 
 
 
-    let URL = 'http://cmc.chinayinyi.com:8018/yywms/Mo?cn=BBS&me=getUser&code='+code+'&time=';
+    let URL = 'http://cmc.chinayinyi.com:8018/yywms/Mo?cn=BBS&me=getUserbbs&code='+code+'&time=';
     fetch(URL, {
       method: 'get',
       headers: {
